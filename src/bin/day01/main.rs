@@ -1,48 +1,86 @@
-use itertools::Itertools;
-
 use aoc2021::utils;
 
 fn main() {
-    part1();
-}
-
-pub fn part1() {
-    println!("PART 1");
     let input = utils::string_from_file("src/bin/day01/input");
 
-    solve(input, 2);
+    println!("PART 1");
+    part1(input.clone());
+
+    println!("PART 2");
+    part2(input);
 }
 
-pub fn solve(input: String, k: usize) -> usize {
-    let answers = input
+pub fn part1(input: String) -> usize {
+    let mut previous: Option<usize> = None;
+    let answer = input
         .lines()
         .map(|x| x.trim().parse::<usize>().unwrap())
-        .combinations(k)
-        .filter(|c| {
-            // println!("{:?}", c);
-            c.iter().sum::<usize>() == 2020
-        })
-        .collect::<Vec<Vec<usize>>>();
+        .fold(0, |count, current| {
+            if previous.is_none() || current <= previous.unwrap() {
+                previous = Some(current);
+                count
+            } else {
+                previous = Some(current);
+                count + 1
+            }
+        });
 
-    if answers.len() == 0 {
-        println!("No solutions found found");
-        std::process::exit(1)
-    }
-    let product = answers[0].iter().product::<usize>();
+    println!("Answer: {:?}", answer);
 
-    println!("Answer: product({:?}) = {:?}", answers[0], product);
+    answer
+}
 
-    product
+pub fn part2(input: String) -> usize {
+    let mut previous: Option<usize> = None;
+    let answer = input
+        .lines()
+        .map(|x| x.trim().parse::<usize>().unwrap())
+        .collect::<Vec<usize>>()
+        .windows(3)
+        .map(|items| items.iter().sum::<usize>())
+        .fold(0, |count, current| {
+            if previous.is_none() || current <= previous.unwrap() {
+                previous = Some(current);
+                count
+            } else {
+                previous = Some(current);
+                count + 1
+            }
+        });
+
+    println!("Answer: {:?}", answer);
+
+    answer
 }
 
 #[test]
-fn example_1() {
-    let input = "1721
-    979
-    366
-    299
-    675
-    1456";
+fn test_part_1() {
+    let input = "199
+    200
+    208
+    210
+    200
+    207
+    240
+    269
+    260
+    263";
 
-    assert_eq!(solve(input.to_string(), 2), 514579);
+    assert_eq!(part1(input.to_string()), 7);
+}
+
+#[test]
+fn test_part_2() {
+    let input = "199
+    200
+    208
+    210
+    200
+    207
+    240
+    269
+    260
+    263";
+
+    assert_eq!(part2(input.to_string()), 5);
 }
