@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, time::Instant};
 
 use aoc2021::utils;
 
@@ -6,7 +6,11 @@ fn main() {
     let input = utils::string_from_file("src/bin/day06/input");
 
     println!("PART 1: {:?}", solve(input.clone(), 80));
+
+    let start = Instant::now();
     println!("PART 2: {:?}", solve(input, 256));
+    let duration = start.elapsed();
+    println!("PART 2 solved in {:?}", duration);
 }
 
 pub fn solve(input: String, day: isize) -> usize {
