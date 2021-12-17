@@ -1,7 +1,6 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 use aoc2021::utils;
-use itertools::Itertools;
 
 fn main() {
     let input = utils::string_from_file("src/bin/day11/input");

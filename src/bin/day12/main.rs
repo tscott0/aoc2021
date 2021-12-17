@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
 use aoc2021::utils;
-use petgraph::{adj::NodeIndex, dot::Dot, graph::UnGraph};
+use petgraph::{adj::NodeIndex, graph::UnGraph};
 
 fn main() {
     let input = utils::string_from_file("src/bin/day12/input");
